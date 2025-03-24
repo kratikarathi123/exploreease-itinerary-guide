@@ -7,7 +7,7 @@ import ItineraryDay from "@/components/ItineraryDay";
 import { Activity, Hotel, Attraction } from "@/components/ItineraryDay";
 import { Button } from "@/components/ui/button";
 import { getItinerary } from "@/utils/itineraryData";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { Calendar, Printer, Share2 } from "lucide-react";
 
 const Itinerary = () => {
