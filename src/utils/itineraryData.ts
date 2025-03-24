@@ -1,4 +1,3 @@
-
 import { Activity, Hotel, Attraction } from "../components/ItineraryDay";
 
 export const popularDestinations = [
@@ -322,29 +321,158 @@ const attractions: Record<string, Attraction[]> = {
   // Add more destinations similarly
 };
 
+// Generate AI-based itinerary for destinations not in our database
+const generateAIItinerary = (destination: string, days: number): {
+  activities: Activity[][];
+  hotels: Hotel[];
+  attractions: Attraction[];
+} => {
+  const activities: Activity[][] = [];
+  
+  // Generate placeholder activities for each day
+  for (let day = 0; day < days; day++) {
+    const dayActivities: Activity[] = [];
+    
+    // Morning activities
+    dayActivities.push({
+      time: "08:00 AM",
+      title: `Breakfast at local ${destination} cafe`,
+      description: `Enjoy authentic local cuisine at a popular cafe in ${destination}.`,
+      location: `${destination} City Center`
+    });
+    
+    dayActivities.push({
+      time: "09:30 AM",
+      title: `Visit ${destination} Cultural Heritage Site`,
+      description: `Explore the rich cultural heritage and historical significance of ${destination}.`,
+      location: `${destination} Heritage Area`
+    });
+    
+    // Afternoon activities
+    dayActivities.push({
+      time: "12:30 PM",
+      title: "Lunch at recommended restaurant",
+      description: `Try the local specialties and flavors of ${destination}.`,
+      location: `Downtown ${destination}`
+    });
+    
+    dayActivities.push({
+      time: "02:00 PM",
+      title: `${destination} Nature Experience`,
+      description: `Experience the natural beauty and landscapes unique to ${destination}.`,
+      location: `${destination} Nature Park`
+    });
+    
+    // Evening activities
+    dayActivities.push({
+      time: "05:00 PM",
+      title: "Shopping and Local Crafts",
+      description: `Discover local handicrafts, souvenirs and traditional items from ${destination}.`,
+      location: `${destination} Market Street`
+    });
+    
+    dayActivities.push({
+      time: "07:30 PM",
+      title: "Dinner and Cultural Show",
+      description: `Experience local cuisine and traditional entertainment of ${destination}.`,
+      location: `${destination} Cultural Center`
+    });
+    
+    activities.push(dayActivities);
+  }
+  
+  // Generate placeholder hotels
+  const generatedHotels: Hotel[] = [
+    {
+      name: `${destination} Luxury Resort`,
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop",
+      price: "₹15,000/night",
+      rating: 5,
+      location: `Central ${destination}`
+    },
+    {
+      name: `${destination} Heritage Hotel`,
+      image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=1925&auto=format&fit=crop",
+      price: "₹8,500/night",
+      rating: 4,
+      location: `Old Town, ${destination}`
+    },
+    {
+      name: `${destination} Budget Stay`,
+      image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=2070&auto=format&fit=crop",
+      price: "₹4,000/night",
+      rating: 3,
+      location: `${destination} City Area`
+    }
+  ];
+  
+  // Generate placeholder attractions
+  const generatedAttractions: Attraction[] = [
+    {
+      name: `${destination} Historical Monument`,
+      image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=2070&auto=format&fit=crop",
+      description: `One of the most iconic historical monuments in ${destination} with rich cultural heritage.`,
+      distance: "3 km",
+      rating: 5
+    },
+    {
+      name: `${destination} Nature Reserve`,
+      image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?q=80&w=1935&auto=format&fit=crop",
+      description: `Beautiful natural landscapes and wildlife unique to the ${destination} region.`,
+      distance: "12 km",
+      rating: 4
+    },
+    {
+      name: `${destination} Cultural Museum`,
+      image: "https://images.unsplash.com/photo-1577110581888-040bdb9474c9?q=80&w=2071&auto=format&fit=crop",
+      description: `Learn about the rich culture and traditions of ${destination} through historical artifacts.`,
+      distance: "5 km",
+      rating: 4
+    },
+    {
+      name: `${destination} Local Markets`,
+      image: "https://images.unsplash.com/photo-1545156071-39024508ea65?q=80&w=1935&auto=format&fit=crop",
+      description: `Experience the vibrant local shopping scene and find unique souvenirs from ${destination}.`,
+      distance: "2 km",
+      rating: 4
+    }
+  ];
+  
+  return {
+    activities,
+    hotels: generatedHotels,
+    attractions: generatedAttractions
+  };
+};
+
 // Get itinerary based on destination and number of days
 export const getItinerary = (destination: string, days: number) => {
   const normalizedDestination = destination.toLowerCase();
   
-  // Find matching destination or use default
+  // Find matching destination or generate AI-based itinerary
   const destinationKey = Object.keys(itineraries).find(key => 
     key === normalizedDestination || normalizedDestination.includes(key)
-  ) || "jaipur";
+  );
   
-  // Get activities based on number of days
-  const activities = itineraries[destinationKey]?.slice(0, days) || [];
-  
-  // If requested days is more than available days, repeat the last day
-  if (activities.length < days) {
-    const lastDay = activities[activities.length - 1];
-    for (let i = activities.length; i < days; i++) {
-      activities.push(lastDay);
+  if (destinationKey) {
+    // Get activities based on number of days from our database
+    const activities = itineraries[destinationKey]?.slice(0, days) || [];
+    
+    // If requested days is more than available days, repeat the last day
+    if (activities.length < days) {
+      const lastDay = activities[activities.length - 1];
+      for (let i = activities.length; i < days; i++) {
+        activities.push(lastDay);
+      }
     }
+    
+    return {
+      activities,
+      hotels: hotels[destinationKey] || hotels["jaipur"],
+      attractions: attractions[destinationKey] || attractions["jaipur"]
+    };
+  } else {
+    // Generate AI-based itinerary for destinations not in our database
+    return generateAIItinerary(destination, days);
   }
-  
-  return {
-    activities,
-    hotels: hotels[destinationKey] || hotels["jaipur"],
-    attractions: attractions[destinationKey] || attractions["jaipur"]
-  };
 };

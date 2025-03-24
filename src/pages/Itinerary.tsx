@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -8,7 +7,7 @@ import { Activity, Hotel, Attraction } from "@/components/ItineraryDay";
 import { Button } from "@/components/ui/button";
 import { getItinerary } from "@/utils/itineraryData";
 import { toast } from "sonner";
-import { Calendar, Printer, Share2 } from "lucide-react";
+import { Calendar, Printer, Share2, Sparkles } from "lucide-react";
 
 const Itinerary = () => {
   const [searchParams] = useSearchParams();
@@ -25,17 +24,32 @@ const Itinerary = () => {
     attractions: Attraction[];
   } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isAIGenerated, setIsAIGenerated] = useState(false);
 
   useEffect(() => {
     if (destination) {
       setLoading(true);
-      // Simulate API call
+      
+      // Check if destination is in our predefined list
+      const normalizedDestination = destination.toLowerCase();
+      const isPredefined = ["jaipur", "goa"].some(key => 
+        key === normalizedDestination || normalizedDestination.includes(key)
+      );
+      
+      setIsAIGenerated(!isPredefined);
+      
+      // Simulate API call with longer time for AI generation
       setTimeout(() => {
         const data = getItinerary(destination, parseInt(days, 10));
         setItineraryData(data);
         setLoading(false);
-        toast.success(`Itinerary for ${destination} generated successfully!`);
-      }, 1500);
+        
+        if (isPredefined) {
+          toast.success(`Itinerary for ${destination} generated successfully!`);
+        } else {
+          toast.success(`AI-generated itinerary for ${destination} created successfully!`);
+        }
+      }, isPredefined ? 1500 : 3000);
     }
   }, [destination, days]);
 
@@ -92,8 +106,14 @@ const Itinerary = () => {
                         <div className="bg-primary/10 rounded-full p-1 mr-2">
                           <Calendar className="h-4 w-4 text-primary" />
                         </div>
-                        <h4 className="text-sm font-medium">
+                        <h4 className="text-sm font-medium flex items-center">
                           {destination}
+                          {isAIGenerated && (
+                            <span className="ml-2 bg-primary/10 text-primary text-xs px-2 py-0.5 rounded-full flex items-center">
+                              <Sparkles className="h-3 w-3 mr-1" />
+                              AI-Generated
+                            </span>
+                          )}
                         </h4>
                       </div>
                       <div className="text-sm text-muted-foreground">
@@ -135,7 +155,9 @@ const Itinerary = () => {
                   <div className="flex flex-col items-center">
                     <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin-slow"></div>
                     <p className="mt-4 text-muted-foreground animate-pulse">
-                      Generating your perfect itinerary...
+                      {isAIGenerated 
+                        ? "Using AI to create your custom itinerary for " + destination + "..."
+                        : "Generating your perfect itinerary..."}
                     </p>
                   </div>
                 </div>
@@ -144,8 +166,14 @@ const Itinerary = () => {
                   {destination && itineraryData ? (
                     <div>
                       <div className="mb-8">
-                        <h1 className="text-3xl font-bold mb-2">
+                        <h1 className="text-3xl font-bold mb-2 flex items-center">
                           Your {days}-Day Itinerary for {destination}
+                          {isAIGenerated && (
+                            <span className="ml-3 bg-primary/10 text-primary text-sm px-2 py-0.5 rounded-full flex items-center">
+                              <Sparkles className="h-4 w-4 mr-1" />
+                              AI-Generated
+                            </span>
+                          )}
                         </h1>
                         <p className="text-muted-foreground">
                           A personalized travel plan with recommended activities, hotels, and attractions
