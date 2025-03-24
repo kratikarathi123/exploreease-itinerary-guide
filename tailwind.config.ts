@@ -62,7 +62,20 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				orange: {
+					50: '#fff7ed',
+					100: '#ffedd5',
+					200: '#fed7aa',
+					300: '#fdba74',
+					400: '#fb923c',
+					500: '#f97316',
+					600: '#ea580c',
+					700: '#c2410c',
+					800: '#9a3412',
+					900: '#7c2d12',
+					950: '#431407',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -101,7 +114,17 @@ export default {
 				'spin-slow': {
 					'0%': { transform: 'rotate(0deg)' },
 					'100%': { transform: 'rotate(360deg)' }
-				}
+				},
+				'pulse-orange': {
+					'0%, 100%': { 
+						backgroundColor: 'hsl(24, 95%, 65%)',
+						boxShadow: '0 0 15px rgba(249, 115, 22, 0.5)' 
+					},
+					'50%': { 
+						backgroundColor: 'hsl(35, 100%, 60%)',
+						boxShadow: '0 0 25px rgba(254, 153, 72, 0.7)' 
+					},
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.3s ease-out',
@@ -111,7 +134,13 @@ export default {
 				'scale-in': 'scale-in 0.3s ease-out',
 				'slide-in': 'slide-in 0.5s ease-out',
 				'slide-up': 'slide-up 0.5s ease-out',
-				'spin-slow': 'spin-slow 8s linear infinite'
+				'spin-slow': 'spin-slow 8s linear infinite',
+				'pulse-orange': 'pulse-orange 3s infinite ease-in-out',
+			},
+			backgroundImage: {
+				'orange-gradient': 'linear-gradient(90deg, hsla(22, 100%, 78%, 1) 0%, hsla(2, 78%, 62%, 1) 100%)',
+				'orange-light-gradient': 'linear-gradient(90deg, hsla(24, 100%, 83%, 1) 0%, hsla(341, 91%, 68%, 1) 100%)',
+				'orange-sunset-gradient': 'linear-gradient(90deg, hsla(39, 100%, 77%, 1) 0%, hsla(22, 90%, 57%, 1) 100%)',
 			}
 		}
 	},

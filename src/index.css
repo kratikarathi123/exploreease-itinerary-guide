@@ -7,33 +7,33 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 210 40% 10%;
+    --background: 30 30% 98%;
+    --foreground: 20 40% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 40% 10%;
+    --card-foreground: 20 40% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 40% 10%;
+    --popover-foreground: 20 40% 10%;
 
-    --primary: 210 100% 50%;
+    --primary: 24 95% 53%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 210 40% 10%;
+    --secondary: 30 100% 97%;
+    --secondary-foreground: 24 95% 35%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 210 40% 50%;
+    --muted: 30 30% 96%;
+    --muted-foreground: 20 40% 40%;
 
-    --accent: 350 100% 60%;
+    --accent: 12 100% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 40% 90%;
-    --input: 210 40% 90%;
-    --ring: 210 100% 50%;
+    --border: 30 30% 90%;
+    --input: 30 30% 90%;
+    --ring: 24 95% 53%;
 
     --radius: 0.75rem;
   }
@@ -70,6 +70,18 @@
   }
   
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+    @apply bg-clip-text text-transparent bg-orange-gradient;
+  }
+
+  .orange-glow {
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
+  }
+
+  .orange-gradient-bg {
+    @apply bg-orange-gradient;
+  }
+
+  .orange-hover-effect {
+    @apply transition-all duration-300 hover:bg-orange-500 hover:text-white hover:orange-glow;
   }
 }
