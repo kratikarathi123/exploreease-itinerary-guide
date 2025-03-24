@@ -37,7 +37,7 @@ const Hero = () => {
           backgroundImage: "url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071&auto=format&fit=crop')",
         }}
       />
-      <div className="absolute inset-0 bg-orange-gradient opacity-60"></div>
+      <div className="absolute inset-0 bg-orange-gradient opacity-60 dark:opacity-70"></div>
       
       <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-orange-900/60 to-transparent"></div>
       
@@ -52,7 +52,7 @@ const Hero = () => {
           
           <form 
             onSubmit={handleSubmit}
-            className="relative overflow-hidden rounded-2xl max-w-xl mx-auto backdrop-blur-md bg-white/10 border border-white/30 p-6 shadow-xl"
+            className="relative overflow-hidden rounded-2xl max-w-xl mx-auto backdrop-blur-md bg-white/10 border border-white/30 p-6 shadow-xl dark:bg-gray-900/10 dark:border-gray-800/30"
           >
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-orange-gradient opacity-20 rounded-full blur-3xl"></div>
             <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-orange-light-gradient opacity-20 rounded-full blur-3xl"></div>
@@ -62,7 +62,7 @@ const Hero = () => {
                 <Input
                   type="text"
                   placeholder="Where in India do you want to go?"
-                  className="w-full bg-white/80 border-white/30 focus:border-white pl-10"
+                  className="w-full bg-white/80 border-white/30 focus:border-white pl-10 text-black placeholder-gray-500 dark:bg-white/90 dark:text-black"
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
                   required
@@ -71,7 +71,7 @@ const Hero = () => {
               </div>
               <div className="w-full md:w-32">
                 <Select value={days} onValueChange={setDays}>
-                  <SelectTrigger className="w-full bg-white/80 border-white/30">
+                  <SelectTrigger className="w-full bg-white/80 border-white/30 text-black dark:bg-white/90 dark:text-black">
                     <SelectValue placeholder="Days" />
                   </SelectTrigger>
                   <SelectContent>
